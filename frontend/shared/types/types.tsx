@@ -38,6 +38,7 @@ export type SlugType = {
 export type HomePageType = {
 	seoTitle: string;
 	seoDescription: string;
+	projects: ProjectType[];
 };
 
 export type WorkPageType = {
@@ -46,5 +47,19 @@ export type WorkPageType = {
 };
 
 export type ProjectType = {
-	slug: SlugType;
+	client: string;
+	tag: string;
+	thumbnailMedia: MediaType;
+	thumbnailRatio: '1:1' | '16:9' | '9:16' | '4:3';
+};
+
+export type SiteSettingsType = {
+	tagline: string;
+	phone: string;
+	email: string;
+	instagramHandle: string;
+	instagramLink: string;
+	address: string;
+	googleMapsLink: string;
+	acknowledgementOfCountry: string;
 };
