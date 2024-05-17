@@ -6,6 +6,13 @@ const SiteStatusWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	gap: ${pxToRem(16)};
+
+	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+		border-bottom: 1px solid var(--colour-white);
+		padding-bottom: ${pxToRem(12)};
+		margin-bottom: ${pxToRem(12)};
+		width: 100%;
+	}
 `;
 
 const Indicator = styled(motion.div)`
