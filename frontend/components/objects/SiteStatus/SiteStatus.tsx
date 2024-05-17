@@ -12,6 +12,7 @@ const SiteStatusWrapper = styled.div`
 		padding-bottom: ${pxToRem(12)};
 		margin-bottom: ${pxToRem(12)};
 		width: 100%;
+		gap: ${pxToRem(8)};
 	}
 `;
 
@@ -20,6 +21,11 @@ const Indicator = styled(motion.div)`
 	width: ${pxToRem(16)};
 	background: var(--colour-white);
 	border-radius: 50%;
+
+	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+		width: ${pxToRem(14)};
+		height: ${pxToRem(14)};
+	}
 `;
 
 const Title = styled.h1``;

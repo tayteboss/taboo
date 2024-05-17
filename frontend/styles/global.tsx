@@ -76,6 +76,10 @@ export const GlobalStyles = createGlobalStyle`
 	a {
 		text-decoration: none;
 		color: var(--colour-white);
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	button {
@@ -83,58 +87,21 @@ export const GlobalStyles = createGlobalStyle`
 	}
 
 	h1,
-	.type-h1 {
-		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
-		letter-spacing: 2%;
-		text-transform: uppercase;
-		font-weight: 100;
-
-		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(14)};
-			line-height: ${pxToRem(14)};
-		}
-	}
-
+	.type-h1,
 	h2,
-	.type-h2 {
-		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
-		letter-spacing: 2%;
-		text-transform: uppercase;
-		font-weight: 100;
-
-		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(14)};
-			line-height: ${pxToRem(14)};
-		}
-	}
-
-	h3,
-	.type-h3 {
-		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
-		letter-spacing: 2%;
-		text-transform: uppercase;
-		font-weight: 100;
-
-		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(14)};
-			line-height: ${pxToRem(14)};
-		}
-	}
-
-	h4,
+	.type-h2
+	,h3,
+	.type-h3,
+	.h4,
 	.type-h4 {
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
-		letter-spacing: 2%;
 		text-transform: uppercase;
 		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(14)};
-			line-height: ${pxToRem(14)};
+			font-size: ${pxToRem(12)};
+			line-height: ${pxToRem(12)};
 		}
 	}
 
@@ -145,14 +112,20 @@ export const GlobalStyles = createGlobalStyle`
 	div {
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
-		letter-spacing: 2%;
 		text-transform: uppercase;
 		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(14)};
-			line-height: ${pxToRem(14)};
+			font-size: ${pxToRem(12)};
+			line-height: ${pxToRem(12)};
 		}
+	}
+
+	.type-small {
+		font-size: ${pxToRem(10)};
+		line-height: ${pxToRem(10)};
+		text-transform: uppercase;
+		font-weight: 100;
 	}
 
 	mux-player {
