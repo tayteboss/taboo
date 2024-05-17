@@ -32,12 +32,12 @@ export const GlobalStyles = createGlobalStyle`
 	-webkit-text-size-adjust: 100%;
 
 	::selection {
-		background-color: black;
-		color: white;
+		background-color: var(--colour-white);
+		color: var(--colour-black);
 	}
 
 	html {
-		background: var(--colour-white);
+		background: var(--colour-black);
 		font-size: 16px;
 
 		&.no-scroll {
@@ -60,7 +60,7 @@ export const GlobalStyles = createGlobalStyle`
 	label,
 	body {
 		font-family: var(--font-default);
-		color: var(--colour-black);
+		color: var(--colour-white);
 		line-height: normal;
 	}
 
@@ -74,8 +74,8 @@ export const GlobalStyles = createGlobalStyle`
 	}
 
 	a {
-		text-decoration: underline;
-		color: var(--colour-black);
+		text-decoration: none;
+		color: var(--colour-white);
 	}
 
 	button {
@@ -87,6 +87,8 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
 		letter-spacing: 2%;
+		text-transform: uppercase;
+		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(14)};
@@ -99,6 +101,8 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
 		letter-spacing: 2%;
+		text-transform: uppercase;
+		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(14)};
@@ -111,6 +115,8 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
 		letter-spacing: 2%;
+		text-transform: uppercase;
+		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(14)};
@@ -123,6 +129,8 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
 		letter-spacing: 2%;
+		text-transform: uppercase;
+		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(14)};
@@ -138,6 +146,8 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(16)};
 		line-height: ${pxToRem(16)};
 		letter-spacing: 2%;
+		text-transform: uppercase;
+		font-weight: 100;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(14)};

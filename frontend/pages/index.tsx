@@ -8,7 +8,9 @@ import Projects from '../components/objects/Projects';
 import IntroSequence from '../components/objects/IntroSequence';
 import { useState } from 'react';
 
-const PageWrapper = styled(motion.div)``;
+const PageWrapper = styled(motion.div)`
+	height: 100dvh;
+`;
 
 type Props = {
 	data: HomePageType;
