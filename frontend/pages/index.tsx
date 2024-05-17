@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 
 const PageWrapper = styled(motion.div)`
 	height: 100dvh;
+	overflow: hidden;
 `;
 
 type Props = {
