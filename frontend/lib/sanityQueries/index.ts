@@ -7,6 +7,28 @@ export const siteSettingsQueryString = `
 export const homePageQueryString = `
 	*[_type == 'homePage'][0] {
 		...,
+		seoTitle,
+		seoDescription,
+		projects[]->{
+			...,
+			thumbnailMedia {
+				mediaType,
+				image {
+					alt,
+					asset-> {
+						url,
+						metadata {
+							lqip
+						}
+					},
+				},
+				video {
+					asset-> {
+						playbackId,
+					},
+				},
+			},
+		},
 	}
 `;
 

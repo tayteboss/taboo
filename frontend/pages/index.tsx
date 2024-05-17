@@ -3,20 +3,23 @@ import { NextSeo } from 'next-seo';
 import { HomePageType, TransitionsType } from '../shared/types/types';
 import { motion } from 'framer-motion';
 import client from '../client';
-import {
-	homePageQueryString,
-	siteSettingsQueryString
-} from '../lib/sanityQueries';
+import { homePageQueryString } from '../lib/sanityQueries';
+import Projects from '../components/objects/Projects';
+import IntroSequence from '../components/objects/IntroSequence';
+import { useState } from 'react';
 
 const PageWrapper = styled(motion.div)``;
 
 type Props = {
 	data: HomePageType;
 	pageTransitionVariants: TransitionsType;
+	hasVisited: boolean;
 };
 
 const Page = (props: Props) => {
-	const { data, pageTransitionVariants } = props;
+	const { data, pageTransitionVariants, hasVisited } = props;
+
+	const [sequenceActive, setSequenceActive] = useState(!hasVisited);
 
 	return (
 		<PageWrapper
@@ -29,15 +32,17 @@ const Page = (props: Props) => {
 				title={data?.seoTitle || ''}
 				description={data?.seoDescription || ''}
 			/>
-			Home
+			<IntroSequence
+				isActive={sequenceActive}
+				setSequenceActive={setSequenceActive}
+			/>
+			<Projects data={data?.projects} isActive={!sequenceActive} />
 		</PageWrapper>
 	);
 };
 
 export async function getStaticProps() {
-	// const siteSettings = await client.fetch(siteSettingsQueryString);
-	// const data = await client.fetch(homePageQueryString);
-	const data = false;
+	const data = await client.fetch(homePageQueryString);
 
 	return {
 		props: {

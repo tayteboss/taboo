@@ -35,7 +35,15 @@ const Layout = (props: Props) => {
 			<ReactLenis root>
 				<Main>{children}</Main>
 			</ReactLenis>
-			<Footer />
+			<Footer
+				phone={phone}
+				email={email}
+				instagramHandle={instagramHandle}
+				instagramLink={instagramLink}
+				address={address}
+				googleMapsLink={googleMapsLink}
+				aoc={acknowledgementOfCountry}
+			/>
 		</>
 	);
 };
