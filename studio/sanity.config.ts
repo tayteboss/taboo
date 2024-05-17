@@ -4,7 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {muxInput} from 'sanity-plugin-mux-input'
 import {vercelDeployTool} from 'sanity-plugin-vercel-deploy'
-import {EarthGlobeIcon, DocumentIcon} from '@sanity/icons'
+import {EarthGlobeIcon, DocumentIcon, CaseIcon} from '@sanity/icons'
 
 export default defineConfig({
   name: 'default',
@@ -28,6 +28,16 @@ export default defineConfig({
               .title('Home Page')
               .icon(DocumentIcon)
               .child(S.editor().schemaType('homePage').documentId('homePage')),
+            S.divider(),
+            S.listItem()
+              .title('Projects')
+              .icon(CaseIcon)
+              .child(
+                S.documentList()
+                  .title('Projects')
+                  .schemaType('project')
+                  .filter('_type == "project"'),
+              ),
           ])
       },
     }),

@@ -24,5 +24,11 @@ export default {
       type: 'string',
       description: 'This is the SEO description that appears in search engines.',
     },
+    {
+      title: 'Projects',
+      name: 'projects',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'project'}}],
+    },
   ],
 }
