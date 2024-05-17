@@ -3,6 +3,7 @@ import { SiteSettingsType } from '../../../shared/types/types';
 import formatHTML from '../../../utils/formatHTML';
 import pxToRem from '../../../utils/pxToRem';
 import Time from '../../elements/Time';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type Props = {
 	phone: SiteSettingsType['phone'];
@@ -12,9 +13,10 @@ type Props = {
 	address: SiteSettingsType['address'];
 	googleMapsLink: SiteSettingsType['googleMapsLink'];
 	aoc: SiteSettingsType['acknowledgementOfCountry'];
+	isActive: boolean;
 };
 
-const FooterWrapper = styled.footer`
+const FooterWrapper = styled(motion.footer)`
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -93,6 +95,24 @@ const Copyright = styled.p`
 	}
 `;
 
+const wrapperVariants = {
+	hidden: {
+		opacity: 0,
+		transition: {
+			duration: 0.5,
+			ease: 'easeInOut'
+		}
+	},
+	visible: {
+		opacity: 1,
+		transition: {
+			duration: 0.5,
+			delay: 0.3,
+			ease: 'easeInOut'
+		}
+	}
+};
+
 const Footer = (props: Props) => {
 	const {
 		phone,
@@ -101,47 +121,64 @@ const Footer = (props: Props) => {
 		instagramLink,
 		address,
 		googleMapsLink,
-		aoc
+		aoc,
+		isActive
 	} = props;
 
 	return (
-		<FooterWrapper>
-			<TopBar>
-				<DetailsWrapper>
-					{phone && <LinkTag href={`tel:${phone}`}>{phone}</LinkTag>}
-					{email && (
-						<LinkTag href={`mailto:${email}`}>{email}</LinkTag>
-					)}
-					{instagramHandle && instagramLink && (
-						<LinkTag href={instagramLink} target="_blank">
-							@{instagramHandle}
-						</LinkTag>
-					)}
-				</DetailsWrapper>
-				<AddressWrapper>
-					{address && googleMapsLink && (
-						<LinkWrapper href={googleMapsLink} target="_blank">
-							<Address
-								dangerouslySetInnerHTML={{
-									__html: formatHTML(address)
-								}}
-							/>
-						</LinkWrapper>
-					)}
-				</AddressWrapper>
-			</TopBar>
-			<BottomBar>
-				<AocWrapper>
-					{aoc && <Aoc className="type-small">{aoc}</Aoc>}
-				</AocWrapper>
-				<CopyrightWrapper>
-					<Time />
-					<Copyright>
-						Copyright Taboo {new Date().getFullYear()}
-					</Copyright>
-				</CopyrightWrapper>
-			</BottomBar>
-		</FooterWrapper>
+		<AnimatePresence>
+			{isActive && (
+				<FooterWrapper
+					variants={wrapperVariants}
+					initial="hidden"
+					animate="visible"
+					exit="hidden"
+				>
+					<TopBar>
+						<DetailsWrapper>
+							{phone && (
+								<LinkTag href={`tel:${phone}`}>{phone}</LinkTag>
+							)}
+							{email && (
+								<LinkTag href={`mailto:${email}`}>
+									{email}
+								</LinkTag>
+							)}
+							{instagramHandle && instagramLink && (
+								<LinkTag href={instagramLink} target="_blank">
+									@{instagramHandle}
+								</LinkTag>
+							)}
+						</DetailsWrapper>
+						<AddressWrapper>
+							{address && googleMapsLink && (
+								<LinkWrapper
+									href={googleMapsLink}
+									target="_blank"
+								>
+									<Address
+										dangerouslySetInnerHTML={{
+											__html: formatHTML(address)
+										}}
+									/>
+								</LinkWrapper>
+							)}
+						</AddressWrapper>
+					</TopBar>
+					<BottomBar>
+						<AocWrapper>
+							{aoc && <Aoc className="type-small">{aoc}</Aoc>}
+						</AocWrapper>
+						<CopyrightWrapper>
+							<Time />
+							<Copyright>
+								Copyright Taboo {new Date().getFullYear()}
+							</Copyright>
+						</CopyrightWrapper>
+					</BottomBar>
+				</FooterWrapper>
+			)}
+		</AnimatePresence>
 	);
 };
 

@@ -6,7 +6,7 @@ import client from '../client';
 import { homePageQueryString } from '../lib/sanityQueries';
 import Projects from '../components/objects/Projects';
 import IntroSequence from '../components/objects/IntroSequence';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PageWrapper = styled(motion.div)`
 	height: 100dvh;
@@ -16,12 +16,20 @@ type Props = {
 	data: HomePageType;
 	pageTransitionVariants: TransitionsType;
 	hasVisited: boolean;
+	setLayoutIsActive: (isActive: boolean) => void;
 };
 
 const Page = (props: Props) => {
-	const { data, pageTransitionVariants, hasVisited } = props;
+	const { data, pageTransitionVariants, hasVisited, setLayoutIsActive } =
+		props;
 
 	const [sequenceActive, setSequenceActive] = useState(!hasVisited);
+
+	useEffect(() => {
+		if (!sequenceActive) {
+			setLayoutIsActive(true);
+		}
+	}, [sequenceActive]);
 
 	return (
 		<PageWrapper

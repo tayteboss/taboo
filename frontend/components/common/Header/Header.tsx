@@ -3,12 +3,14 @@ import { SiteSettingsType } from '../../../shared/types/types';
 import pxToRem from '../../../utils/pxToRem';
 import Tagline from '../../objects/Tagline';
 import SiteStatus from '../../objects/SiteStatus';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type Props = {
 	tagline: SiteSettingsType['tagline'];
+	isActive: boolean;
 };
 
-const HeaderWrapper = styled.header`
+const HeaderWrapper = styled(motion.header)`
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -27,14 +29,42 @@ const HeaderWrapper = styled.header`
 	}
 `;
 
+const wrapperVariants = {
+	hidden: {
+		opacity: 0,
+		transition: {
+			duration: 0.5,
+			ease: 'easeInOut'
+		}
+	},
+	visible: {
+		opacity: 1,
+		transition: {
+			duration: 0.3,
+			delay: 0.3,
+			ease: 'easeInOut'
+		}
+	}
+};
+
 const Header = (props: Props) => {
-	const { tagline } = props;
+	const { tagline, isActive } = props;
 
 	return (
-		<HeaderWrapper className="header">
-			<SiteStatus />
-			<Tagline tagline={tagline} />
-		</HeaderWrapper>
+		<AnimatePresence>
+			{isActive && (
+				<HeaderWrapper
+					className="header"
+					variants={wrapperVariants}
+					initial="hidden"
+					animate="visible"
+					exit="hidden"
+				>
+					<SiteStatus />
+					<Tagline tagline={tagline} />
+				</HeaderWrapper>
+			)}
+		</AnimatePresence>
 	);
 };
 

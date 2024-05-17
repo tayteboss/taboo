@@ -25,6 +25,7 @@ const App = (props: Props) => {
 	const { Component, pageProps } = props;
 
 	const [hasVisited, setHasVisited] = useState<boolean>(false);
+	const [layoutIsActive, setLayoutIsActive] = useState<boolean>(false);
 
 	const router = useRouter();
 	const routerEvents = router.events;
@@ -56,7 +57,7 @@ const App = (props: Props) => {
 		<>
 			<GlobalStyles />
 			<ThemeProvider theme={theme}>
-				<Layout>
+				<Layout layoutIsActive={layoutIsActive}>
 					<AnimatePresence
 						mode="wait"
 						onExitComplete={() => handleExitComplete()}
@@ -66,6 +67,7 @@ const App = (props: Props) => {
 							key={router.asPath}
 							pageTransitionVariants={pageTransitionVariants}
 							hasVisited={hasVisited}
+							setLayoutIsActive={setLayoutIsActive}
 						/>
 					</AnimatePresence>
 				</Layout>
