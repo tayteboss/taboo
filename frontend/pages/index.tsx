@@ -7,6 +7,7 @@ import { homePageQueryString } from '../lib/sanityQueries';
 import Projects from '../components/objects/Projects';
 import IntroSequence from '../components/objects/IntroSequence';
 import { useEffect, useState } from 'react';
+import LogoBlock from '../components/objects/LogoBlock';
 
 const PageWrapper = styled(motion.div)`
 	height: 100dvh;
@@ -48,6 +49,7 @@ const Page = (props: Props) => {
 				setSequenceActive={setSequenceActive}
 			/>
 			<Projects data={data?.projects} isActive={!sequenceActive} />
+			<LogoBlock isActive={!sequenceActive} />
 		</PageWrapper>
 	);
 };
