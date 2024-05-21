@@ -4,7 +4,7 @@ export const theme = {
 		white: '#FFFAFC'
 	},
 	fonts: {
-		default: 'arial'
+		default: 'GT Pressura, sans-serif'
 	},
 	mediaBreakpoints: {
 		desktop: '(min-width: 1680px)',

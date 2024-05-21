@@ -98,6 +98,7 @@ export const GlobalStyles = createGlobalStyle`
 		line-height: ${pxToRem(16)};
 		text-transform: uppercase;
 		font-weight: 100;
+		letter-spacing: 0.05rem;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(12)};
@@ -114,6 +115,7 @@ export const GlobalStyles = createGlobalStyle`
 		line-height: ${pxToRem(16)};
 		text-transform: uppercase;
 		font-weight: 100;
+		letter-spacing: 0.05rem;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(12)};
@@ -126,6 +128,7 @@ export const GlobalStyles = createGlobalStyle`
 		line-height: ${pxToRem(10)};
 		text-transform: uppercase;
 		font-weight: 100;
+		letter-spacing: 0.05rem;
 	}
 
 	mux-player {
