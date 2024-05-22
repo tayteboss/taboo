@@ -111,6 +111,11 @@ const ImageComponent = (props: Props) => {
 							alt={data?.image?.alt || ''}
 							priority={isPriority}
 							blurDataURL={blurDataURL}
+							fill
+							style={{
+								objectFit: 'cover'
+							}}
+							sizes="50vw"
 						/>
 					</InnerBlur>
 				)}
@@ -126,6 +131,11 @@ const ImageComponent = (props: Props) => {
 						alt={data?.image?.alt || ''}
 						priority={isPriority}
 						blurDataURL={blurDataURL}
+						fill
+						style={{
+							objectFit: 'cover'
+						}}
+						sizes="50vw"
 					/>
 				)}
 			</Inner>

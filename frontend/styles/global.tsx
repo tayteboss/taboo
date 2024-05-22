@@ -95,14 +95,14 @@ export const GlobalStyles = createGlobalStyle`
 	.h4,
 	.type-h4 {
 		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
+		line-height: ${pxToRem(18)};
 		text-transform: uppercase;
 		font-weight: 100;
 		letter-spacing: 0.05rem;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(12)};
-			line-height: ${pxToRem(12)};
+			line-height: ${pxToRem(13)};
 		}
 	}
 
@@ -112,20 +112,20 @@ export const GlobalStyles = createGlobalStyle`
 	button,
 	div {
 		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
+		line-height: ${pxToRem(18)};
 		text-transform: uppercase;
 		font-weight: 100;
 		letter-spacing: 0.05rem;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(12)};
-			line-height: ${pxToRem(12)};
+			line-height: ${pxToRem(13)};
 		}
 	}
 
 	.type-small {
 		font-size: ${pxToRem(10)};
-		line-height: ${pxToRem(10)};
+		line-height: ${pxToRem(13)};
 		text-transform: uppercase;
 		font-weight: 100;
 		letter-spacing: 0.05rem;

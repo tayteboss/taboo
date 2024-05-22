@@ -47,10 +47,11 @@ export type WorkPageType = {
 };
 
 export type ProjectType = {
+	title: string;
 	client: string;
 	tag: string;
 	thumbnailMedia: MediaType;
-	thumbnailRatio: '1:1' | '16:9' | '9:16' | '4:3';
+	thumbnailRatio: '1:1' | '16:9' | '9:16' | '4:5' | '3:2';
 };
 
 export type SiteSettingsType = {

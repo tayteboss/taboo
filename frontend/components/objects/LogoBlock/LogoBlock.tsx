@@ -14,6 +14,7 @@ const LogoBlockWrapper = styled(motion.div)`
 	transform: translate(-50%, -50%);
 	z-index: 10;
 	mix-blend-mode: difference;
+	pointer-events: none;
 
 	svg {
 		width: 75vw;

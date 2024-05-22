@@ -23,6 +23,7 @@ const Projects = (props: Props) => {
 
 	const [sliderRef, instanceRef] = useKeenSlider(
 		{
+			size: 1,
 			slideChanged() {
 				console.log('slide changed');
 			}
@@ -38,7 +39,7 @@ const Projects = (props: Props) => {
 				<ProjectsWrapper ref={sliderRef} className="keen-slider">
 					{data.map((project, i) => (
 						<Slide className="keen-slider__slide" key={i}>
-							<ProjectCard data={project} />
+							<ProjectCard data={project} slideCount={i + 1} />
 						</Slide>
 					))}
 				</ProjectsWrapper>
