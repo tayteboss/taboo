@@ -6,6 +6,7 @@ import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { SiteSettingsType } from '../../shared/types/types';
 import Stage from '../objects/Stage';
 import IntroSequence from '../objects/IntroSequence';
+import Cursor from '../elements/Cursor';
 
 const siteSettings: SiteSettingsType = require('../../json/siteSettings.json');
 
@@ -30,6 +31,8 @@ type Props = {
 const Layout = (props: Props) => {
 	const { children, hasVisited } = props;
 
+	const [appCursorRefresh, setAppCursorRefresh] = useState(0);
+
 	const lenis = useLenis(({ scroll }) => {});
 
 	return (
@@ -48,6 +51,9 @@ const Layout = (props: Props) => {
 				aoc={acknowledgementOfCountry}
 			/>
 			<IntroSequence hasVisited={hasVisited} />
+			<Cursor
+				cursorRefresh={() => setAppCursorRefresh(appCursorRefresh + 1)}
+			/>
 		</>
 	);
 };

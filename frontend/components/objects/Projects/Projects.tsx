@@ -85,7 +85,7 @@ const getIntermediatePoint = (
 
 const getTransition = (index: number) => {
 	const speeds = [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
-	const delays = [0, 3, 5, 7, 8, 8, 12, 15, 19, 24];
+	const delays = [0, 3, 5, 7, 8, 10, 14, 18, 22, 27];
 	return {
 		duration: speeds[index % speeds.length],
 		delay: delays[index % delays.length],
@@ -131,6 +131,7 @@ const Projects = (props: Props) => {
 								}}
 								animate="animate"
 								variants={slideVariants}
+								className="cursor-link"
 							>
 								<ProjectCard
 									data={project}
