@@ -1,26 +1,32 @@
 import styled from 'styled-components';
-import { motion, Variants } from 'framer-motion';
+import { motion, useAnimation, Variants } from 'framer-motion';
 import { HomePageType } from '../../../shared/types/types';
 import ProjectCard from '../../elements/ProjectCard';
 
 type Props = {
 	data: HomePageType['projects'];
-	isActive: boolean;
 };
 
 const ProjectsWrapper = styled.div`
 	height: 100vh;
 	width: 100%;
-	overflow: hidden;
 	position: relative;
+	z-index: 5;
+`;
+
+const Inner = styled(motion.div)`
+	height: 100%;
+	width: 100%;
 `;
 
 const Slide = styled(motion.div)`
 	position: absolute;
 	z-index: 1;
+	mix-blend-mode: screen;
 
 	&:hover {
 		z-index: 2;
+		mix-blend-mode: normal;
 	}
 `;
 
@@ -109,24 +115,45 @@ const Projects = (props: Props) => {
 
 	const hasData = data && data.length > 0;
 
+	const imgAnimation = useAnimation();
+
+	const handleMouseMove = (e) => {
+		const { clientX, clientY } = e;
+		const moveX = clientX - window.innerWidth / 2;
+		const moveY = clientY - window.innerHeight / 2;
+		const offsetFactor = 25;
+		imgAnimation.start({
+			x: moveX / offsetFactor,
+			y: moveY / offsetFactor
+		});
+	};
+
 	return (
 		<>
 			{hasData && (
 				<ProjectsWrapper>
-					{data.map((project, i) => (
-						<Slide
-							key={i}
-							custom={i}
-							initial={{
-								x: getRandomDirection(i).x,
-								y: getRandomDirection(i).y
-							}}
-							animate="animate"
-							variants={slideVariants}
-						>
-							<ProjectCard data={project} slideCount={i + 1} />
-						</Slide>
-					))}
+					<Inner
+						animate={imgAnimation}
+						onMouseMove={(e) => handleMouseMove(e)}
+					>
+						{data.map((project, i) => (
+							<Slide
+								key={i}
+								custom={i}
+								initial={{
+									x: getRandomDirection(i).x,
+									y: getRandomDirection(i).y
+								}}
+								animate="animate"
+								variants={slideVariants}
+							>
+								<ProjectCard
+									data={project}
+									slideCount={i + 1}
+								/>
+							</Slide>
+						))}
+					</Inner>
 				</ProjectsWrapper>
 			)}
 		</>

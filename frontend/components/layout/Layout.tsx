@@ -5,6 +5,7 @@ import { ReactNode, useState } from 'react';
 import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { SiteSettingsType } from '../../shared/types/types';
 import Stage from '../objects/Stage';
+import IntroSequence from '../objects/IntroSequence';
 
 const siteSettings: SiteSettingsType = require('../../json/siteSettings.json');
 
@@ -23,22 +24,21 @@ const Main = styled.main``;
 
 type Props = {
 	children: ReactNode;
-	layoutIsActive: boolean;
+	hasVisited: boolean;
 };
 
 const Layout = (props: Props) => {
-	const { children, layoutIsActive } = props;
+	const { children, hasVisited } = props;
 
 	const lenis = useLenis(({ scroll }) => {});
 
 	return (
 		<>
-			<Header tagline={tagline} isActive={layoutIsActive} />
+			<Header tagline={tagline} />
 			<ReactLenis root>
 				<Main>{children}</Main>
 			</ReactLenis>
 			<Footer
-				isActive={layoutIsActive}
 				phone={phone}
 				email={email}
 				instagramHandle={instagramHandle}
@@ -47,6 +47,7 @@ const Layout = (props: Props) => {
 				googleMapsLink={googleMapsLink}
 				aoc={acknowledgementOfCountry}
 			/>
+			<IntroSequence hasVisited={hasVisited} />
 		</>
 	);
 };

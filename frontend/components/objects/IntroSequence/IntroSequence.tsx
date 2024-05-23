@@ -1,16 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-	isActive: boolean;
-	setSequenceActive: (value: boolean) => void;
+	hasVisited: boolean;
 };
 
 const IntroSequenceWrapper = styled(motion.section)`
+	position: fixed;
+	top: 0;
+	left: 0;
 	background: var(--colour-white);
 	height: 100vh;
 	width: 100%;
-	position: relative;
+	z-index: 500;
 
 	svg {
 		position: absolute;
@@ -40,11 +43,13 @@ const wrapperVariants = {
 };
 
 const IntroSequence = (props: Props) => {
-	const { isActive, setSequenceActive } = props;
+	const { hasVisited } = props;
+
+	const [sequenceActive, setSequenceActive] = useState(!hasVisited);
 
 	return (
 		<AnimatePresence>
-			{isActive && (
+			{sequenceActive && (
 				<IntroSequenceWrapper
 					variants={wrapperVariants}
 					initial="hidden"

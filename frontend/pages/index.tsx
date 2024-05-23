@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import client from '../client';
 import { homePageQueryString } from '../lib/sanityQueries';
 import Projects from '../components/objects/Projects';
-import IntroSequence from '../components/objects/IntroSequence';
-import { useEffect, useState } from 'react';
 import LogoBlock from '../components/objects/LogoBlock';
 
 const PageWrapper = styled(motion.div)`
@@ -22,16 +20,7 @@ type Props = {
 };
 
 const Page = (props: Props) => {
-	const { data, pageTransitionVariants, hasVisited, setLayoutIsActive } =
-		props;
-
-	const [sequenceActive, setSequenceActive] = useState(!hasVisited);
-
-	useEffect(() => {
-		if (!sequenceActive) {
-			setLayoutIsActive(true);
-		}
-	}, [sequenceActive]);
+	const { data, pageTransitionVariants } = props;
 
 	return (
 		<PageWrapper
@@ -44,12 +33,8 @@ const Page = (props: Props) => {
 				title={data?.seoTitle || ''}
 				description={data?.seoDescription || ''}
 			/>
-			<IntroSequence
-				isActive={sequenceActive}
-				setSequenceActive={setSequenceActive}
-			/>
-			<Projects data={data?.projects} isActive={!sequenceActive} />
-			<LogoBlock isActive={!sequenceActive} />
+			<Projects data={data?.projects} />
+			<LogoBlock />
 		</PageWrapper>
 	);
 };

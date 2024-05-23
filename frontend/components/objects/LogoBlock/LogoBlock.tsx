@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import LogoSvg from '../../svgs/LogoSvg';
 import Tilt from 'react-parallax-tilt';
-import { AnimatePresence, motion } from 'framer-motion';
 
-type Props = {
-	isActive: boolean;
-};
-
-const LogoBlockWrapper = styled(motion.div)`
+const LogoBlockWrapper = styled.div`
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -15,6 +10,7 @@ const LogoBlockWrapper = styled(motion.div)`
 	z-index: 10;
 	mix-blend-mode: difference;
 	pointer-events: none;
+	z-index: 100;
 
 	svg {
 		width: 75vw;
@@ -29,48 +25,20 @@ const LogoInner = styled.div`
 	transform: translate(-50%, -50%);
 `;
 
-const wrapperVariants = {
-	hidden: {
-		opacity: 0,
-		transition: {
-			duration: 0.3,
-			ease: 'easeInOut'
-		}
-	},
-	visible: {
-		opacity: 1,
-		transition: {
-			duration: 0.3,
-			ease: 'easeInOut'
-		}
-	}
-};
-
-const LogoBlock = (props: Props) => {
-	const { isActive } = props;
-
+const LogoBlock = () => {
 	return (
-		<AnimatePresence>
-			{isActive && (
-				<LogoBlockWrapper
-					variants={wrapperVariants}
-					initial="hidden"
-					animate="visible"
-					exit="hidden"
-				>
-					<Tilt
-						tiltMaxAngleX={3}
-						tiltMaxAngleY={3}
-						transitionSpeed={800}
-						trackOnWindow
-					>
-						<LogoInner>
-							<LogoSvg colour="var(--colour-white)" />
-						</LogoInner>
-					</Tilt>
-				</LogoBlockWrapper>
-			)}
-		</AnimatePresence>
+		<LogoBlockWrapper>
+			<Tilt
+				tiltMaxAngleX={5}
+				tiltMaxAngleY={5}
+				transitionSpeed={800}
+				trackOnWindow
+			>
+				<LogoInner>
+					<LogoSvg colour="var(--colour-white)" />
+				</LogoInner>
+			</Tilt>
+		</LogoBlockWrapper>
 	);
 };
 

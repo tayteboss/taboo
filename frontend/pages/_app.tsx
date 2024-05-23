@@ -57,7 +57,7 @@ const App = (props: Props) => {
 		<>
 			<GlobalStyles />
 			<ThemeProvider theme={theme}>
-				<Layout layoutIsActive={layoutIsActive}>
+				<Layout hasVisited={hasVisited}>
 					<AnimatePresence
 						mode="wait"
 						onExitComplete={() => handleExitComplete()}
