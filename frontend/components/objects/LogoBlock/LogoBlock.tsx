@@ -20,6 +20,11 @@ const LogoBlockWrapper = styled.div`
 	svg {
 		width: 75vw;
 		height: auto;
+
+		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+			width: 90vw;
+			transform: translateX(-7px);
+		}
 	}
 `;
 

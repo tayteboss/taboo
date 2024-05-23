@@ -85,8 +85,14 @@ const getIntermediatePoint = (
 };
 
 const getTransition = (index: number) => {
-	const speeds = [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
-	const delays = [0, 3, 5, 7, 11, 16, 20, 24, 27, 30];
+	const isSmallScreen = window.innerWidth < 768;
+	const speeds = isSmallScreen
+		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
+		: [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
+	const delays = isSmallScreen
+		? [0, 5, 7, 15, 25, 30, 35, 40, 45, 50]
+		: [0, 1, 2, 3, 5, 8, 10, 12, 13, 15];
+
 	return {
 		duration: speeds[index % speeds.length],
 		delay: delays[index % delays.length],
@@ -100,8 +106,6 @@ const slideVariants: Variants = {
 		const from = getRandomDirection(i);
 		const to = getRandomEndPosition(i);
 		const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
-
-		console.log({ from, to, intermediate }); // Log for debugging
 
 		return {
 			// Use calculated intermediate point closer to the middle

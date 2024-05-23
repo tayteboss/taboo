@@ -22,6 +22,10 @@ const IntroSequenceWrapper = styled(motion.section)`
 		transform: translate(-50%, -70%) scale(4.9);
 		width: 100%;
 		height: auto;
+
+		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+			transform: translate(-50%, -70%) scale(15);
+		}
 	}
 `;
 

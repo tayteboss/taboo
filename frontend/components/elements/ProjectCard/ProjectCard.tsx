@@ -31,10 +31,18 @@ const ProjectCardWrapper = styled.div<{
 		filter: blur(0px) !important;
 	}
 
+	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+		width: 80vw;
+	}
+
 	.image-component-wrapper,
 	.video-component-wrapper {
 		padding-top: ${(props) => props.$paddingTopRatio};
 		width: 30vw;
+
+		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+			width: 80vw;
+		}
 	}
 `;
 
