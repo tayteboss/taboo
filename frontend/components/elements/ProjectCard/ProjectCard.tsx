@@ -6,16 +6,29 @@ import pxToRem from '../../../utils/pxToRem';
 type Props = {
 	data: ProjectType;
 	slideCount: number;
+	isHovered: boolean;
+	setIsHovered: (isHovered: boolean) => void;
 };
 
-const ProjectCardWrapper = styled.div<{ $paddingTopRatio: string }>`
+const ProjectCardWrapper = styled.div<{
+	$paddingTopRatio: string;
+	$isHovered: boolean;
+}>`
 	position: relative;
 	overflow: hidden;
 	width: 30vw;
 	z-index: 1;
+	transform: ${(props) => props.$isHovered && 'scale(0.98)'};
+	opacity: ${(props) => props.$isHovered && '0.6'};
+	filter: ${(props) => props.$isHovered && 'blur(2px)'};
+
+	transition: all var(--transition-speed-default) var(--transition-ease);
 
 	&:hover {
 		z-index: 2;
+		transform: scale(1.02) !important;
+		opacity: 1 !important;
+		filter: blur(0px) !important;
 	}
 
 	.image-component-wrapper,
@@ -34,7 +47,7 @@ const Span = styled.span``;
 const Divider = styled.span``;
 
 const ProjectCard = (props: Props) => {
-	const { data, slideCount } = props;
+	const { data, slideCount, isHovered, setIsHovered } = props;
 
 	let ratio = '56.25%';
 
@@ -56,10 +69,13 @@ const ProjectCard = (props: Props) => {
 			break;
 	}
 
-	console.log('data', data);
-
 	return (
-		<ProjectCardWrapper $paddingTopRatio={ratio}>
+		<ProjectCardWrapper
+			$paddingTopRatio={ratio}
+			onMouseOver={() => setIsHovered(true)}
+			onMouseOut={() => setIsHovered(false)}
+			$isHovered={isHovered}
+		>
 			<MediaStack data={data?.thumbnailMedia} />
 			<ContentWrapper>
 				{data?.title && (

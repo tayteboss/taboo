@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import { HomePageType } from '../../../shared/types/types';
 import ProjectCard from '../../elements/ProjectCard';
+import { useState } from 'react';
 
 type Props = {
 	data: HomePageType['projects'];
@@ -114,6 +115,8 @@ const slideVariants: Variants = {
 const Projects = (props: Props) => {
 	const { data, animation } = props;
 
+	const [isHovered, setIsHovered] = useState(false);
+
 	const hasData = data && data.length > 0;
 
 	return (
@@ -136,6 +139,8 @@ const Projects = (props: Props) => {
 								<ProjectCard
 									data={project}
 									slideCount={i + 1}
+									setIsHovered={setIsHovered}
+									isHovered={isHovered}
 								/>
 							</Slide>
 						))}
