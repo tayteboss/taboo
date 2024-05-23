@@ -85,7 +85,7 @@ const getIntermediatePoint = (
 
 const getTransition = (index: number) => {
 	const speeds = [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
-	const delays = [0, 3, 5, 7, 8, 10, 14, 18, 22, 27];
+	const delays = [0, 3, 5, 7, 11, 16, 20, 24, 27, 30];
 	return {
 		duration: speeds[index % speeds.length],
 		delay: delays[index % delays.length],

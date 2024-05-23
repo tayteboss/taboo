@@ -49,6 +49,7 @@ const Page = (props: Props) => {
 			initial="hidden"
 			animate="visible"
 			exit="hidden"
+			className="performance"
 		>
 			<NextSeo
 				title={data?.seoTitle || ''}
