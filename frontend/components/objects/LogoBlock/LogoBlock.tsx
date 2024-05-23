@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import LogoSvg from '../../svgs/LogoSvg';
 import Tilt from 'react-parallax-tilt';
+import { motion, useAnimation } from 'framer-motion';
+
+type Props = {
+	animation: ReturnType<typeof useAnimation>;
+};
 
 const LogoBlockWrapper = styled.div`
 	position: fixed;
@@ -18,6 +23,12 @@ const LogoBlockWrapper = styled.div`
 	}
 `;
 
+const Inner = styled(motion.div)`
+	position: relative;
+	width: 100%;
+	height: 100%;
+`;
+
 const LogoInner = styled.div`
 	position: absolute;
 	top: 50%;
@@ -25,19 +36,23 @@ const LogoInner = styled.div`
 	transform: translate(-50%, -50%);
 `;
 
-const LogoBlock = () => {
+const LogoBlock = (props: Props) => {
+	const { animation } = props;
+
 	return (
 		<LogoBlockWrapper>
-			<Tilt
-				tiltMaxAngleX={5}
-				tiltMaxAngleY={5}
-				transitionSpeed={800}
-				trackOnWindow
-			>
-				<LogoInner>
-					<LogoSvg colour="var(--colour-white)" />
-				</LogoInner>
-			</Tilt>
+			<Inner animate={animation}>
+				<Tilt
+					tiltMaxAngleX={5}
+					tiltMaxAngleY={5}
+					transitionSpeed={800}
+					trackOnWindow
+				>
+					<LogoInner>
+						<LogoSvg colour="var(--colour-white)" />
+					</LogoInner>
+				</Tilt>
+			</Inner>
 		</LogoBlockWrapper>
 	);
 };

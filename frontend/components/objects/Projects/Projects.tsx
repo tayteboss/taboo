@@ -5,6 +5,7 @@ import ProjectCard from '../../elements/ProjectCard';
 
 type Props = {
 	data: HomePageType['projects'];
+	animation: ReturnType<typeof useAnimation>;
 };
 
 const ProjectsWrapper = styled.div`
@@ -111,31 +112,15 @@ const slideVariants: Variants = {
 };
 
 const Projects = (props: Props) => {
-	const { data } = props;
+	const { data, animation } = props;
 
 	const hasData = data && data.length > 0;
-
-	const imgAnimation = useAnimation();
-
-	const handleMouseMove = (e) => {
-		const { clientX, clientY } = e;
-		const moveX = clientX - window.innerWidth / 2;
-		const moveY = clientY - window.innerHeight / 2;
-		const offsetFactor = 25;
-		imgAnimation.start({
-			x: moveX / offsetFactor,
-			y: moveY / offsetFactor
-		});
-	};
 
 	return (
 		<>
 			{hasData && (
 				<ProjectsWrapper>
-					<Inner
-						animate={imgAnimation}
-						onMouseMove={(e) => handleMouseMove(e)}
-					>
+					<Inner animate={animation}>
 						{data.map((project, i) => (
 							<Slide
 								key={i}
