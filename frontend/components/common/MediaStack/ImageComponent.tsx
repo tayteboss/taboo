@@ -25,7 +25,7 @@ const InnerBlur = styled(motion.div)`
 	z-index: 1;
 `;
 
-const Inner = styled(motion.div)`
+const Inner = styled.div`
 	position: absolute;
 	inset: 0;
 	height: 100%;
@@ -98,33 +98,7 @@ const ImageComponent = (props: Props) => {
 
 	return (
 		<ImageComponentWrapper className="image-component-wrapper">
-			<AnimatePresence initial={false}>
-				{inView && data?.image?.asset?.metadata?.lqip && (
-					<InnerBlur
-						variants={wrapperVariants}
-						initial="hidden"
-						animate="visible"
-						exit="hidden"
-					>
-						<Image
-							src={blurDataURL}
-							alt={data?.image?.alt || ''}
-							priority={isPriority}
-							blurDataURL={blurDataURL}
-							fill
-							style={{
-								objectFit: 'cover'
-							}}
-							sizes="50vw"
-						/>
-					</InnerBlur>
-				)}
-			</AnimatePresence>
-			<Inner
-				variants={defaultVariants}
-				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
-			>
+			<Inner>
 				{imageUrl && (
 					<Image
 						src={imageUrl}

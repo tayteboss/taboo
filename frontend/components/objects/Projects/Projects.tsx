@@ -16,9 +16,12 @@ const ProjectsWrapper = styled.div`
 `;
 
 const Slide = styled(motion.div)`
-	height: 100%;
-	width: 100%;
 	position: absolute;
+	z-index: 1;
+
+	&:hover {
+		z-index: 2;
+	}
 `;
 
 const getRandomDirection = (index: number) => {
@@ -53,9 +56,29 @@ const getRandomEndPosition = (index: number) => {
 	return endPositions[index % endPositions.length];
 };
 
+// Function to calculate the intermediate point closer to the middle
+const getIntermediatePoint = (
+	from: { x: string; y: string },
+	to: { x: string; y: string }
+) => {
+	const fromX = parseInt(from.x) || (from.x.includes('-') ? -100 : 100);
+	const fromY = parseInt(from.y) || (from.y.includes('-') ? -100 : 100);
+	const toX = parseInt(to.x) || (to.x.includes('-') ? -100 : 100);
+	const toY = parseInt(to.y) || (to.y.includes('-') ? -100 : 100);
+
+	// Calculate the intermediate point to be between 40 and 60vw/vh
+	const midX = ((fromX + toX) / 2) * 0.4 + 20; // Adjusted to be closer to the middle
+	const midY = ((fromY + toY) / 2) * 0.4 + 20; // Adjusted to be closer to the middle
+
+	return {
+		x: `${midX}vw`,
+		y: `${midY}vh`
+	};
+};
+
 const getTransition = (index: number) => {
-	const speeds = [15, 18, 20, 25, 22, 19, 17, 21, 23, 16];
-	const delays = [0, 0.5, 1, 1.5, 0.25, 0.75, 1.25, 1.75, 0.1, 0.9];
+	const speeds = [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
+	const delays = [0, 3, 5, 7, 8, 8, 12, 15, 19, 24];
 	return {
 		duration: speeds[index % speeds.length],
 		delay: delays[index % delays.length],
@@ -68,9 +91,14 @@ const slideVariants: Variants = {
 	animate: (i: number) => {
 		const from = getRandomDirection(i);
 		const to = getRandomEndPosition(i);
+		const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
+
+		console.log({ from, to, intermediate }); // Log for debugging
+
 		return {
-			x: [from.x, '0vw', to.x],
-			y: [from.y, '0vh', to.y],
+			// Use calculated intermediate point closer to the middle
+			x: [from.x, intermediate.x, to.x],
+			y: [from.y, intermediate.y, to.y],
 			transition: getTransition(i)
 		};
 	}

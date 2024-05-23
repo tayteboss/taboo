@@ -12,6 +12,11 @@ const ProjectCardWrapper = styled.div<{ $paddingTopRatio: string }>`
 	position: relative;
 	overflow: hidden;
 	width: 30vw;
+	z-index: 1;
+
+	&:hover {
+		z-index: 2;
+	}
 
 	.image-component-wrapper,
 	.video-component-wrapper {
