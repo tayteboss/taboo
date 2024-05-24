@@ -62,12 +62,13 @@ const Page = (props: Props) => {
 			animate="visible"
 			exit="hidden"
 			className="performance"
+			onMouseMove={(e) => handleMouseMove(e)}
 		>
 			<NextSeo
 				title={data?.seoTitle || ''}
 				description={data?.seoDescription || ''}
 			/>
-			<Inner onMouseMove={(e) => handleMouseMove(e)}>
+			<Inner>
 				<Projects
 					data={behindProjects}
 					animation={behindProjectsAnimation}
