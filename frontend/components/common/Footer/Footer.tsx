@@ -74,6 +74,10 @@ const AocWrapper = styled.div`
 
 const Aoc = styled.p`
 	width: calc(100% - 80px);
+
+	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+		width: 100%;
+	}
 `;
 
 const CopyrightWrapper = styled.div`
