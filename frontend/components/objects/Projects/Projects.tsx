@@ -2,18 +2,23 @@ import styled from 'styled-components';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import { HomePageType } from '../../../shared/types/types';
 import ProjectCard from '../../elements/ProjectCard';
-import { useState } from 'react';
 
 type Props = {
 	data: HomePageType['projects'];
 	animation: ReturnType<typeof useAnimation>;
+	isBehind?: boolean;
+	isHovered: boolean;
+	setIsHovered: (isHovered: boolean) => void;
 };
 
-const ProjectsWrapper = styled.div`
+const ProjectsWrapper = styled.div<{ $isBehind: boolean }>`
 	height: 100vh;
 	width: 100%;
-	position: relative;
-	z-index: 5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: ${(props) => (props.$isBehind ? 5 : 1000)};
+	pointer-events: none;
 `;
 
 const Inner = styled(motion.div)`
@@ -24,7 +29,7 @@ const Inner = styled(motion.div)`
 const Slide = styled(motion.div)`
 	position: absolute;
 	z-index: 1;
-	mix-blend-mode: screen;
+	mix-blend-mode: normal;
 
 	&:hover {
 		z-index: 2;
@@ -32,51 +37,45 @@ const Slide = styled(motion.div)`
 	}
 `;
 
-const getRandomDirection = (index: number) => {
+const getRandomDirection = (index: number, isBehind: boolean) => {
 	const directions = [
-		{ x: '100vw', y: '100vh' },
-		{ x: '-100vw', y: '100vh' },
-		{ x: '100vw', y: '-100vh' },
-		{ x: '-100vw', y: '-100vh' },
-		{ x: '50vw', y: '100vh' },
-		{ x: '-50vw', y: '100vh' },
-		{ x: '50vw', y: '-100vh' },
-		{ x: '-50vw', y: '-100vh' },
-		{ x: '100vw', y: '50vh' },
-		{ x: '-100vw', y: '50vh' }
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-10vh' : '15vh' }, // Right with slight upward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '15vh' }, // Left with slight upward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '10vh' : '-15vh' }, // Right with slight downward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '-15vh' }, // Left with slight downward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-10vh' : '10vh' }, // Mid-right with slight upward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-15vh' : '10vh' }, // Mid-left with slight upward
+		{ x: isBehind ? '-110vw' : '1100vw', y: isBehind ? '15vh' : '-10vh' }, // Mid-right with slight downward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '15vh' : '-10vh' } // Mid-left with slight downward
 	];
 	return directions[index % directions.length];
 };
 
-const getRandomEndPosition = (index: number) => {
+const getRandomEndPosition = (index: number, isBehind: boolean) => {
 	const endPositions = [
-		{ x: '-100vw', y: '-100vh' },
-		{ x: '100vw', y: '-100vh' },
-		{ x: '-100vw', y: '100vh' },
-		{ x: '100vw', y: '100vh' },
-		{ x: '-50vw', y: '-100vh' },
-		{ x: '50vw', y: '-100vh' },
-		{ x: '-50vw', y: '100vh' },
-		{ x: '50vw', y: '100vh' },
-		{ x: '-100vw', y: '50vh' },
-		{ x: '100vw', y: '50vh' }
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '15vh' }, // Left with slight upward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '15vh' }, // Right with slight upward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '-15vh' }, // Left with slight downward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '-15vh' }, // Right with slight downward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '10vh' }, // Mid-left with slight upward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-15vh' : '10vh' }, // Mid-right with slight upward
+		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '-10vh' }, // Mid-left with slight downward
+		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '-10vh' } // Mid-right with slight downward
 	];
 	return endPositions[index % endPositions.length];
 };
 
-// Function to calculate the intermediate point closer to the middle
 const getIntermediatePoint = (
 	from: { x: string; y: string },
 	to: { x: string; y: string }
 ) => {
 	const fromX = parseInt(from.x) || (from.x.includes('-') ? -100 : 100);
-	const fromY = parseInt(from.y) || (from.y.includes('-') ? -100 : 100);
+	const fromY = parseInt(from.y) || (from.y.includes('-') ? -15 : 15);
 	const toX = parseInt(to.x) || (to.x.includes('-') ? -100 : 100);
-	const toY = parseInt(to.y) || (to.y.includes('-') ? -100 : 100);
+	const toY = parseInt(to.y) || (to.y.includes('-') ? -15 : 15);
 
-	// Calculate the intermediate point to be between 40 and 60vw/vh
-	const midX = ((fromX + toX) / 2) * 0.4 + 20; // Adjusted to be closer to the middle
-	const midY = ((fromY + toY) / 2) * 0.4 + 20; // Adjusted to be closer to the middle
+	const midX = ((fromX + toX) / 2) * 0.4 + 30; // Adjusted to be closer to the middle
+	const midY = ((fromY + toY) / 2) * 0.4 + 15; // Adjusted to be closer to the middle
 
 	return {
 		x: `${midX}vw`,
@@ -84,14 +83,21 @@ const getIntermediatePoint = (
 	};
 };
 
-const getTransition = (index: number) => {
+const getTransition = (index: number, isBehind: boolean) => {
 	const isSmallScreen = window.innerWidth < 768;
 	const speeds = isSmallScreen
 		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
 		: [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
-	const delays = isSmallScreen
-		? [0, 5, 7, 15, 25, 30, 35, 40, 45, 50]
-		: [0, 1, 2, 3, 5, 8, 10, 12, 13, 15];
+
+	const frontDelays = isSmallScreen
+		? [0, 8, 15, 25, 35, 45, 55, 65, 75, 85]
+		: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18];
+
+	const behindDelays = isSmallScreen
+		? [5, 18, 30, 40, 50, 60, 70, 80, 90, 100]
+		: [1, 5, 9, 13, 17, 21, 25, 29, 33, 37];
+
+	const delays = isBehind ? behindDelays : frontDelays;
 
 	return {
 		duration: speeds[index % speeds.length],
@@ -101,40 +107,43 @@ const getTransition = (index: number) => {
 	};
 };
 
-const slideVariants: Variants = {
-	animate: (i: number) => {
-		const from = getRandomDirection(i);
-		const to = getRandomEndPosition(i);
-		const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
-
-		return {
-			// Use calculated intermediate point closer to the middle
-			x: [from.x, intermediate.x, to.x],
-			y: [from.y, intermediate.y, to.y],
-			transition: getTransition(i)
-		};
-	}
-};
-
 const Projects = (props: Props) => {
-	const { data, animation } = props;
-
-	const [isHovered, setIsHovered] = useState(false);
+	const {
+		data,
+		animation,
+		isBehind = false,
+		isHovered,
+		setIsHovered
+	} = props;
 
 	const hasData = data && data.length > 0;
+
+	const slideVariants: Variants = {
+		animate: (i: number) => {
+			const from = getRandomDirection(i, isBehind);
+			const to = getRandomEndPosition(i, isBehind);
+			const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
+
+			return {
+				x: [from.x, intermediate.x, to.x],
+				y: [from.y, intermediate.y, to.y],
+				transition: getTransition(i, isBehind)
+			};
+		}
+	};
 
 	return (
 		<>
 			{hasData && (
-				<ProjectsWrapper>
+				<ProjectsWrapper $isBehind={isBehind}>
 					<Inner animate={animation}>
 						{data.map((project, i) => (
 							<Slide
 								key={i}
 								custom={i}
 								initial={{
-									x: getRandomDirection(i).x,
-									y: getRandomDirection(i).y
+									x: getRandomDirection(i, isBehind).x,
+									y: getRandomDirection(i, isBehind).y
 								}}
 								animate="animate"
 								variants={slideVariants}

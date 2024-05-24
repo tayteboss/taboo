@@ -13,14 +13,15 @@ type Props = {
 const ProjectCardWrapper = styled.div<{
 	$paddingTopRatio: string;
 	$isHovered: boolean;
+	$isSmall: boolean;
 }>`
 	position: relative;
 	overflow: hidden;
-	width: 30vw;
+	width: ${(props) => (props.$isSmall ? '20vw' : '30vw')};
 	z-index: 1;
 	transform: ${(props) => props.$isHovered && 'scale(0.98)'};
-	opacity: ${(props) => props.$isHovered && '0.6'};
-	filter: ${(props) => props.$isHovered && 'blur(2px)'};
+	filter: ${(props) => props.$isHovered && 'blur(2px) brightness(0.5)'};
+	pointer-events: all;
 
 	transition: all var(--transition-speed-default) var(--transition-ease);
 
@@ -28,20 +29,20 @@ const ProjectCardWrapper = styled.div<{
 		z-index: 2;
 		transform: scale(1.02) !important;
 		opacity: 1 !important;
-		filter: blur(0px) !important;
+		filter: blur(0px) brightness(1) !important;
 	}
 
 	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-		width: 80vw;
+		width: ${(props) => (props.$isSmall ? '50vw' : '80vw')};
 	}
 
 	.image-component-wrapper,
 	.video-component-wrapper {
 		padding-top: ${(props) => props.$paddingTopRatio};
-		width: 30vw;
+		width: ${(props) => (props.$isSmall ? '20vw' : '30vw')};
 
 		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-			width: 80vw;
+			width: ${(props) => (props.$isSmall ? '50vw' : '80vw')};
 		}
 	}
 `;
@@ -83,6 +84,9 @@ const ProjectCard = (props: Props) => {
 			onMouseOver={() => setIsHovered(true)}
 			onMouseOut={() => setIsHovered(false)}
 			$isHovered={isHovered}
+			$isSmall={
+				data.thumbnailRatio === '16:9' || data.thumbnailRatio === '9:16'
+			}
 		>
 			<MediaStack data={data?.thumbnailMedia} />
 			<ContentWrapper>
