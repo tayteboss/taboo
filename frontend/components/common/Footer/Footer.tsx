@@ -3,6 +3,7 @@ import { SiteSettingsType } from '../../../shared/types/types';
 import formatHTML from '../../../utils/formatHTML';
 import pxToRem from '../../../utils/pxToRem';
 import Time from '../../elements/Time';
+import HoverTyper from '../../elements/HoverTyper';
 
 type Props = {
 	phone: SiteSettingsType['phone'];
@@ -125,12 +126,18 @@ const Footer = (props: Props) => {
 				<DetailsWrapper>
 					{instagramHandle && instagramLink && (
 						<LinkTag href={instagramLink} target="_blank">
-							@{instagramHandle}
+							<HoverTyper data={`@${instagramHandle}`} />
 						</LinkTag>
 					)}
-					{phone && <LinkTag href={`tel:${phone}`}>{phone}</LinkTag>}
+					{phone && (
+						<LinkTag href={`tel:${phone}`}>
+							<HoverTyper data={phone} />
+						</LinkTag>
+					)}
 					{email && (
-						<LinkTag href={`mailto:${email}`}>{email}</LinkTag>
+						<LinkTag href={`mailto:${email}`}>
+							<HoverTyper data={email} />
+						</LinkTag>
 					)}
 				</DetailsWrapper>
 			</TopBar>
