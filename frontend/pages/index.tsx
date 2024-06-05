@@ -17,41 +17,32 @@ const Inner = styled(motion.div)``;
 
 type Props = {
 	data: HomePageType;
-	frontProjects: HomePageType['projects'];
-	behindProjects: HomePageType['projects'];
 	pageTransitionVariants: TransitionsType;
 	hasVisited: boolean;
 	setLayoutIsActive: (isActive: boolean) => void;
 };
 
 const Page = (props: Props) => {
-	const { data, frontProjects, behindProjects, pageTransitionVariants } =
-		props;
+	const { data, pageTransitionVariants } = props;
 
 	const [isHovered, setIsHovered] = useState(false);
 
 	const logosAnimation = useAnimation();
-	const frontProjectsAnimation = useAnimation();
-	const behindProjectsAnimation = useAnimation();
+	const projectsAnimation = useAnimation();
 
 	const handleMouseMove = (e: any) => {
 		const { clientX, clientY } = e;
 		const moveX = clientX - window.innerWidth / 2;
 		const moveY = clientY - window.innerHeight / 2;
-		const frontProjectsOffsetFactor = 85;
+		const projectsOffsetFactor = 20;
 		const logosOffsetFactor = 50;
-		const behindProjectsOffsetFactor = 15;
-		frontProjectsAnimation.start({
-			x: moveX / frontProjectsOffsetFactor,
-			y: moveY / frontProjectsOffsetFactor
+		projectsAnimation.start({
+			x: moveX / projectsOffsetFactor,
+			y: moveY / projectsOffsetFactor
 		});
 		logosAnimation.start({
 			x: moveX / logosOffsetFactor,
 			y: moveY / logosOffsetFactor
-		});
-		behindProjectsAnimation.start({
-			x: moveX / behindProjectsOffsetFactor,
-			y: moveY / behindProjectsOffsetFactor
 		});
 	};
 
@@ -69,17 +60,10 @@ const Page = (props: Props) => {
 				description={data?.seoDescription || ''}
 			/>
 			<Inner>
+				<LogoBlock animation={logosAnimation} isHovered={isHovered} />
 				<Projects
-					data={behindProjects}
-					animation={behindProjectsAnimation}
-					isBehind
-					setIsHovered={setIsHovered}
-					isHovered={isHovered}
-				/>
-				<LogoBlock animation={logosAnimation} />
-				<Projects
-					data={frontProjects}
-					animation={frontProjectsAnimation}
+					data={data?.projects}
+					animation={projectsAnimation}
 					setIsHovered={setIsHovered}
 					isHovered={isHovered}
 				/>
@@ -91,14 +75,9 @@ const Page = (props: Props) => {
 export async function getStaticProps() {
 	const data = await client.fetch(homePageQueryString);
 
-	const frontProjects = data.projects.slice(0, data?.projects.length / 2);
-	const behindProjects = data.projects.slice(data?.projects.length / 2);
-
 	return {
 		props: {
-			data,
-			frontProjects,
-			behindProjects
+			data
 		}
 	};
 }

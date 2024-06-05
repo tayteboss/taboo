@@ -5,9 +5,10 @@ import { motion, useAnimation } from 'framer-motion';
 
 type Props = {
 	animation: ReturnType<typeof useAnimation>;
+	isHovered: boolean;
 };
 
-const LogoBlockWrapper = styled.div`
+const LogoBlockWrapper = styled.div<{ $isHovered: boolean }>`
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -15,7 +16,7 @@ const LogoBlockWrapper = styled.div`
 	z-index: 10;
 	mix-blend-mode: difference;
 	pointer-events: none;
-	z-index: 100;
+	z-index: ${(props) => (props.$isHovered ? 1 : 100)};
 
 	svg {
 		width: 75vw;
@@ -42,10 +43,10 @@ const LogoInner = styled.div`
 `;
 
 const LogoBlock = (props: Props) => {
-	const { animation } = props;
+	const { animation, isHovered } = props;
 
 	return (
-		<LogoBlockWrapper>
+		<LogoBlockWrapper $isHovered={isHovered}>
 			<Inner animate={animation}>
 				<Tilt
 					tiltMaxAngleX={5}

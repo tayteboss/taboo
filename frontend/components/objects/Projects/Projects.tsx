@@ -6,19 +6,18 @@ import ProjectCard from '../../elements/ProjectCard';
 type Props = {
 	data: HomePageType['projects'];
 	animation: ReturnType<typeof useAnimation>;
-	isBehind?: boolean;
 	isHovered: boolean;
 	setIsHovered: (isHovered: boolean) => void;
 };
 
-const ProjectsWrapper = styled.div<{ $isBehind: boolean }>`
+const ProjectsWrapper = styled.div`
 	height: 100vh;
 	width: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: ${(props) => (props.$isBehind ? 5 : 1000)};
-	pointer-events: none;
+	z-index: 5;
+	mix-blend-mode: difference;
 `;
 
 const Inner = styled(motion.div)`
@@ -37,30 +36,30 @@ const Slide = styled(motion.div)`
 	}
 `;
 
-const getRandomDirection = (index: number, isBehind: boolean) => {
+const getRandomDirection = (index: number) => {
 	const directions = [
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-10vh' : '15vh' }, // Right with slight upward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '15vh' }, // Left with slight upward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '10vh' : '-15vh' }, // Right with slight downward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '-15vh' }, // Left with slight downward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-10vh' : '10vh' }, // Mid-right with slight upward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-15vh' : '10vh' }, // Mid-left with slight upward
-		{ x: isBehind ? '-110vw' : '1100vw', y: isBehind ? '15vh' : '-10vh' }, // Mid-right with slight downward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '15vh' : '-10vh' } // Mid-left with slight downward
+		{ x: '-110vw', y: '-10vh' },
+		{ x: '110vw', y: '-10vh' },
+		{ x: '-110vw', y: '10vh' },
+		{ x: '110vw', y: '10vh' },
+		{ x: '-110vw', y: '-10vh' },
+		{ x: '110vw', y: '-15vh' },
+		{ x: '-110vw', y: '-10vh' },
+		{ x: '110vw', y: '-10vh' }
 	];
 	return directions[index % directions.length];
 };
 
-const getRandomEndPosition = (index: number, isBehind: boolean) => {
+const getRandomEndPosition = (index: number) => {
 	const endPositions = [
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '15vh' }, // Left with slight upward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '15vh' }, // Right with slight upward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '-10vh' : '-15vh' }, // Left with slight downward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '-15vh' }, // Right with slight downward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '10vh' }, // Mid-left with slight upward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '-15vh' : '10vh' }, // Mid-right with slight upward
-		{ x: isBehind ? '110vw' : '-110vw', y: isBehind ? '10vh' : '-10vh' }, // Mid-left with slight downward
-		{ x: isBehind ? '-110vw' : '110vw', y: isBehind ? '15vh' : '-10vh' } // Mid-right with slight downward
+		{ x: '110vw', y: '-10vh' },
+		{ x: '-110vw', y: '15vh' },
+		{ x: '110vw', y: '-10vh' },
+		{ x: '-110vw', y: '15vh' },
+		{ x: '110vw', y: '10vh' },
+		{ x: '-110vw', y: '-15vh' },
+		{ x: '110vw', y: '10vh' },
+		{ x: '-110vw', y: '15vh' }
 	];
 	return endPositions[index % endPositions.length];
 };
@@ -83,21 +82,15 @@ const getIntermediatePoint = (
 	};
 };
 
-const getTransition = (index: number, isBehind: boolean) => {
+const getTransition = (index: number) => {
 	const isSmallScreen = window.innerWidth < 768;
 	const speeds = isSmallScreen
 		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
 		: [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
 
-	const frontDelays = isSmallScreen
+	const delays = isSmallScreen
 		? [0, 8, 15, 25, 35, 45, 55, 65, 75, 85]
-		: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18];
-
-	const behindDelays = isSmallScreen
-		? [5, 18, 30, 40, 50, 60, 70, 80, 90, 100]
-		: [1, 5, 9, 13, 17, 21, 25, 29, 33, 37];
-
-	const delays = isBehind ? behindDelays : frontDelays;
+		: [0, 4, 8, 15, 20, 26, 33, 40, 56, 65];
 
 	return {
 		duration: speeds[index % speeds.length],
@@ -108,26 +101,20 @@ const getTransition = (index: number, isBehind: boolean) => {
 };
 
 const Projects = (props: Props) => {
-	const {
-		data,
-		animation,
-		isBehind = false,
-		isHovered,
-		setIsHovered
-	} = props;
+	const { data, animation, isHovered, setIsHovered } = props;
 
 	const hasData = data && data.length > 0;
 
 	const slideVariants: Variants = {
 		animate: (i: number) => {
-			const from = getRandomDirection(i, isBehind);
-			const to = getRandomEndPosition(i, isBehind);
+			const from = getRandomDirection(i);
+			const to = getRandomEndPosition(i);
 			const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
 
 			return {
 				x: [from.x, intermediate.x, to.x],
 				y: [from.y, intermediate.y, to.y],
-				transition: getTransition(i, isBehind)
+				transition: getTransition(i)
 			};
 		}
 	};
@@ -135,15 +122,15 @@ const Projects = (props: Props) => {
 	return (
 		<>
 			{hasData && (
-				<ProjectsWrapper $isBehind={isBehind}>
+				<ProjectsWrapper>
 					<Inner animate={animation}>
 						{data.map((project, i) => (
 							<Slide
 								key={i}
 								custom={i}
 								initial={{
-									x: getRandomDirection(i, isBehind).x,
-									y: getRandomDirection(i, isBehind).y
+									x: getRandomDirection(i).x,
+									y: getRandomDirection(i).y
 								}}
 								animate="animate"
 								variants={slideVariants}

@@ -20,7 +20,7 @@ const FooterWrapper = styled.footer`
 	left: 0;
 	width: 100%;
 	padding: ${pxToRem(32)};
-	z-index: 100;
+	z-index: 1000;
 	display: flex;
 	flex-direction: column;
 
@@ -111,17 +111,6 @@ const Footer = (props: Props) => {
 	return (
 		<FooterWrapper>
 			<TopBar>
-				<DetailsWrapper>
-					{phone && <LinkTag href={`tel:${phone}`}>{phone}</LinkTag>}
-					{email && (
-						<LinkTag href={`mailto:${email}`}>{email}</LinkTag>
-					)}
-					{instagramHandle && instagramLink && (
-						<LinkTag href={instagramLink} target="_blank">
-							@{instagramHandle}
-						</LinkTag>
-					)}
-				</DetailsWrapper>
 				<AddressWrapper>
 					{address && googleMapsLink && (
 						<LinkWrapper href={googleMapsLink} target="_blank">
@@ -133,6 +122,17 @@ const Footer = (props: Props) => {
 						</LinkWrapper>
 					)}
 				</AddressWrapper>
+				<DetailsWrapper>
+					{instagramHandle && instagramLink && (
+						<LinkTag href={instagramLink} target="_blank">
+							@{instagramHandle}
+						</LinkTag>
+					)}
+					{phone && <LinkTag href={`tel:${phone}`}>{phone}</LinkTag>}
+					{email && (
+						<LinkTag href={`mailto:${email}`}>{email}</LinkTag>
+					)}
+				</DetailsWrapper>
 			</TopBar>
 			<BottomBar>
 				<AocWrapper>

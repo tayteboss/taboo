@@ -18,7 +18,7 @@ type StyledProps = {
 const CursorWrapper = styled.div<StyledProps>`
 	height: 27px;
 	width: 27px;
-	z-index: 1000;
+	z-index: 2000;
 	position: fixed;
 	display: ${(props) => (props.$isOnDevice ? 'none' : 'block')};
 	mix-blend-mode: difference;

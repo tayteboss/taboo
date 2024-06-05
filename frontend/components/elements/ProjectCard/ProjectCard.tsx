@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import MediaStack from '../../common/MediaStack';
 import { ProjectType } from '../../../shared/types/types';
-import pxToRem from '../../../utils/pxToRem';
+import ContentTyper from '../ContentTyper';
+import { useState } from 'react';
 
 type Props = {
 	data: ProjectType;
@@ -17,7 +18,7 @@ const ProjectCardWrapper = styled.div<{
 }>`
 	position: relative;
 	overflow: hidden;
-	width: ${(props) => (props.$isSmall ? '20vw' : '30vw')};
+	width: ${(props) => (props.$isSmall ? '15vw' : '25vw')};
 	z-index: 1;
 	transform: ${(props) => props.$isHovered && 'scale(0.98)'};
 	filter: ${(props) => props.$isHovered && 'blur(2px) brightness(0.5)'};
@@ -33,7 +34,7 @@ const ProjectCardWrapper = styled.div<{
 	}
 
 	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-		width: ${(props) => (props.$isSmall ? '50vw' : '80vw')};
+		width: ${(props) => (props.$isSmall ? '30vw' : '60vw')};
 	}
 
 	.image-component-wrapper,
@@ -47,16 +48,10 @@ const ProjectCardWrapper = styled.div<{
 	}
 `;
 
-const ContentWrapper = styled.div`
-	padding-top: ${pxToRem(16)};
-`;
-
-const Span = styled.span``;
-
-const Divider = styled.span``;
-
 const ProjectCard = (props: Props) => {
 	const { data, slideCount, isHovered, setIsHovered } = props;
+
+	const [cardHovered, setCardHovered] = useState(false);
 
 	let ratio = '56.25%';
 
@@ -81,23 +76,24 @@ const ProjectCard = (props: Props) => {
 	return (
 		<ProjectCardWrapper
 			$paddingTopRatio={ratio}
-			onMouseOver={() => setIsHovered(true)}
-			onMouseOut={() => setIsHovered(false)}
+			onMouseOver={() => {
+				setIsHovered(true);
+				setCardHovered(true);
+			}}
+			onMouseOut={() => {
+				setIsHovered(false);
+				setCardHovered(false);
+			}}
 			$isHovered={isHovered}
 			$isSmall={
 				data.thumbnailRatio === '16:9' || data.thumbnailRatio === '9:16'
 			}
 		>
 			<MediaStack data={data?.thumbnailMedia} />
-			<ContentWrapper>
-				{data?.title && (
-					<Span>
-						{slideCount} {data?.title}
-					</Span>
-				)}
-				<Divider> | </Divider>
-				{data?.tag && <Span>{data?.tag}</Span>}
-			</ContentWrapper>
+			<ContentTyper
+				data={`${data?.title} | ${data?.tag}`}
+				isActive={cardHovered}
+			/>
 		</ProjectCardWrapper>
 	);
 };

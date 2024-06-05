@@ -17,7 +17,7 @@ const HeaderWrapper = styled.header`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	z-index: 100;
+	z-index: 1000;
 
 	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
 		padding: ${pxToRem(20)} ${pxToRem(12)};
