@@ -17,7 +17,6 @@ const ProjectsWrapper = styled.div`
 	top: 0;
 	left: 0;
 	z-index: 5;
-	mix-blend-mode: difference;
 `;
 
 const Inner = styled(motion.div)`
@@ -41,25 +40,17 @@ const getRandomDirection = (index: number) => {
 		{ x: '-110vw', y: '-10vh' },
 		{ x: '110vw', y: '-10vh' },
 		{ x: '-110vw', y: '10vh' },
-		{ x: '110vw', y: '10vh' },
-		{ x: '-110vw', y: '-10vh' },
-		{ x: '110vw', y: '-15vh' },
-		{ x: '-110vw', y: '-10vh' },
-		{ x: '110vw', y: '-10vh' }
+		{ x: '110vw', y: '10vh' }
 	];
 	return directions[index % directions.length];
 };
 
 const getRandomEndPosition = (index: number) => {
 	const endPositions = [
-		{ x: '110vw', y: '-10vh' },
-		{ x: '-110vw', y: '15vh' },
-		{ x: '110vw', y: '-10vh' },
-		{ x: '-110vw', y: '15vh' },
-		{ x: '110vw', y: '10vh' },
-		{ x: '-110vw', y: '-15vh' },
-		{ x: '110vw', y: '10vh' },
-		{ x: '-110vw', y: '15vh' }
+		{ x: '110vw', y: '-30vh' },
+		{ x: '-110vw', y: '30vh' },
+		{ x: '110vw', y: '70vh' },
+		{ x: '-110vw', y: '80vh' }
 	];
 	return endPositions[index % endPositions.length];
 };
@@ -68,13 +59,13 @@ const getIntermediatePoint = (
 	from: { x: string; y: string },
 	to: { x: string; y: string }
 ) => {
-	const fromX = parseInt(from.x) || (from.x.includes('-') ? -100 : 100);
-	const fromY = parseInt(from.y) || (from.y.includes('-') ? -15 : 15);
-	const toX = parseInt(to.x) || (to.x.includes('-') ? -100 : 100);
-	const toY = parseInt(to.y) || (to.y.includes('-') ? -15 : 15);
+	const fromX = parseFloat(from.x);
+	const fromY = parseFloat(from.y);
+	const toX = parseFloat(to.x);
+	const toY = parseFloat(to.y);
 
-	const midX = ((fromX + toX) / 2) * 0.4 + 30; // Adjusted to be closer to the middle
-	const midY = ((fromY + toY) / 2) * 0.4 + 15; // Adjusted to be closer to the middle
+	const midX = (fromX + toX) / 2;
+	const midY = (fromY + toY) / 2;
 
 	return {
 		x: `${midX}vw`,
@@ -86,11 +77,11 @@ const getTransition = (index: number) => {
 	const isSmallScreen = window.innerWidth < 768;
 	const speeds = isSmallScreen
 		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
-		: [30, 36, 40, 50, 44, 38, 34, 42, 46, 32];
+		: [40, 36, 40, 42, 40, 40, 34, 42, 46, 38];
 
 	const delays = isSmallScreen
 		? [0, 8, 15, 25, 35, 45, 55, 65, 75, 85]
-		: [0, 4, 8, 15, 20, 26, 33, 40, 56, 65];
+		: [0, 4, 8, 15, 25, 35, 42, 57, 65, 75];
 
 	return {
 		duration: speeds[index % speeds.length],
@@ -109,7 +100,7 @@ const Projects = (props: Props) => {
 		animate: (i: number) => {
 			const from = getRandomDirection(i);
 			const to = getRandomEndPosition(i);
-			const intermediate = getIntermediatePoint(from, to); // Calculate intermediate point
+			const intermediate = getIntermediatePoint(from, to);
 
 			return {
 				x: [from.x, intermediate.x, to.x],

@@ -18,7 +18,7 @@ const ProjectCardWrapper = styled.div<{
 }>`
 	position: relative;
 	overflow: hidden;
-	width: ${(props) => (props.$isSmall ? '15vw' : '25vw')};
+	width: ${(props) => (props.$isSmall ? '25vw' : '35vw')};
 	z-index: 1;
 	transform: ${(props) => props.$isHovered && 'scale(0.98)'};
 	filter: ${(props) => props.$isHovered && 'blur(2px) brightness(0.5)'};
@@ -31,6 +31,14 @@ const ProjectCardWrapper = styled.div<{
 		transform: scale(1.02) !important;
 		opacity: 1 !important;
 		filter: blur(0px) brightness(1) !important;
+
+		img {
+			transform: scale(1.15);
+		}
+	}
+
+	img {
+		transition: all 3000ms var(--transition-ease);
 	}
 
 	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
@@ -40,10 +48,10 @@ const ProjectCardWrapper = styled.div<{
 	.image-component-wrapper,
 	.video-component-wrapper {
 		padding-top: ${(props) => props.$paddingTopRatio};
-		width: ${(props) => (props.$isSmall ? '20vw' : '30vw')};
+		width: ${(props) => (props.$isSmall ? '30vw' : '60vw')};
 
 		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-			width: ${(props) => (props.$isSmall ? '50vw' : '80vw')};
+			width: ${(props) => (props.$isSmall ? '60vw' : '80vw')};
 		}
 	}
 `;
