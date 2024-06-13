@@ -51,7 +51,7 @@ const ProjectCardWrapper = styled.div<{
 		width: ${(props) => (props.$isSmall ? '30vw' : '60vw')};
 
 		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-			width: ${(props) => (props.$isSmall ? '60vw' : '80vw')};
+			width: ${(props) => (props.$isSmall ? '70vw' : '80vw')};
 		}
 	}
 `;

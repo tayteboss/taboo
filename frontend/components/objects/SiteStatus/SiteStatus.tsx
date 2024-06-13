@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import pxToRem from '../../../utils/pxToRem';
 import { motion } from 'framer-motion';
 
-const SiteStatusWrapper = styled.div`
+const SiteStatusWrapper = styled(motion.div)`
 	display: flex;
 	align-items: center;
 	gap: ${pxToRem(16)};
@@ -19,7 +19,7 @@ const SiteStatusWrapper = styled.div`
 const Indicator = styled(motion.div)`
 	height: ${pxToRem(16)};
 	width: ${pxToRem(16)};
-	background: var(--colour-white);
+	background: #eea5a3;
 	border-radius: 50%;
 
 	@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
@@ -32,7 +32,14 @@ const Title = styled.h1``;
 
 const SiteStatus = () => {
 	return (
-		<SiteStatusWrapper>
+		<SiteStatusWrapper
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{
+				duration: 1,
+				delay: 4
+			}}
+		>
 			<Indicator
 				initial={{ opacity: 0, scale: 0.98 }}
 				animate={{ opacity: 1, scale: 1 }}
