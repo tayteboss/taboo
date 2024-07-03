@@ -38,7 +38,7 @@ export const GlobalStyles = createGlobalStyle`
 	}
 
 	html {
-		background: var(--colour-black);
+		background: var(--colour-white);
 		font-size: 16px;
 
 		&.no-scroll {

@@ -11,6 +11,7 @@ import { useState } from 'react';
 const PageWrapper = styled(motion.div)`
 	height: 100dvh;
 	overflow: hidden;
+	background: var(--colour-black);
 `;
 
 const Inner = styled(motion.div)``;

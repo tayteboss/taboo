@@ -13,7 +13,7 @@ import useHeaderHeight from '../hooks/useHeaderHeight';
 
 const pageTransitionVariants: TransitionsType = {
 	hidden: { opacity: 0, transition: { duration: 0.3 } },
-	visible: { opacity: 1, transition: { duration: 0.3, delay: 0.25 } }
+	visible: { opacity: 1, transition: { duration: 0.3, delay: 1 } }
 };
 
 type Props = {

@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import { ReactNode, useState } from 'react';
-import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { SiteSettingsType } from '../../shared/types/types';
-import Stage from '../objects/Stage';
 import IntroSequence from '../objects/IntroSequence';
 import Cursor from '../elements/Cursor';
 
@@ -33,14 +31,10 @@ const Layout = (props: Props) => {
 
 	const [appCursorRefresh, setAppCursorRefresh] = useState(0);
 
-	const lenis = useLenis(({ scroll }) => {});
-
 	return (
 		<>
 			<Header tagline={tagline} />
-			<ReactLenis root>
-				<Main>{children}</Main>
-			</ReactLenis>
+			<Main>{children}</Main>
 			<Footer
 				phone={phone}
 				email={email}
