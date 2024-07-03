@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import { HomePageType } from '../../../shared/types/types';
 import ProjectCard from '../../elements/ProjectCard';
+import useViewportWidth from '../../../hooks/useViewportWidth';
 
 type Props = {
 	data: HomePageType['projects'];
@@ -37,20 +38,20 @@ const Slide = styled(motion.div)`
 
 const getRandomDirection = (index: number) => {
 	const directions = [
-		{ x: '-110vw', y: '-10vh' },
-		{ x: '110vw', y: '-10vh' },
-		{ x: '-110vw', y: '10vh' },
-		{ x: '110vw', y: '10vh' }
+		{ x: '-105vw', y: '-10vh' },
+		{ x: '105vw', y: '-10vh' },
+		{ x: '-105vw', y: '10vh' },
+		{ x: '105vw', y: '10vh' }
 	];
 	return directions[index % directions.length];
 };
 
 const getRandomEndPosition = (index: number) => {
 	const endPositions = [
-		{ x: '110vw', y: '-30vh' },
-		{ x: '-110vw', y: '30vh' },
-		{ x: '110vw', y: '70vh' },
-		{ x: '-110vw', y: '80vh' }
+		{ x: '105vw', y: '-30vh' },
+		{ x: '-105vw', y: '30vh' },
+		{ x: '105vw', y: '70vh' },
+		{ x: '-105vw', y: '80vh' }
 	];
 	return endPositions[index % endPositions.length];
 };
@@ -73,21 +74,58 @@ const getIntermediatePoint = (
 	};
 };
 
-const getTransition = (index: number) => {
-	const isSmallScreen = window.innerWidth < 768;
+const getSpeedsAndDelays = (isSmallScreen: boolean) => {
 	const speeds = isSmallScreen
-		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
-		: [40, 39, 40, 42, 40, 40, 38, 42, 44, 38];
+		? [
+				15, 18, 20, 25, 22, 19, 17, 21, 23, 16, 18, 20, 25, 22, 19, 17,
+				21, 23
+		  ]
+		: [
+				30, 41, 40, 42, 40, 40, 38, 42, 44, 38, 40, 42, 40, 40, 38, 42,
+				44, 38
+		  ];
 
 	const delays = isSmallScreen
-		? [0, 8, 15, 25, 35, 45, 55, 65, 75, 85]
-		: [0, 4, 8, 15, 25, 35, 42, 57, 65, 75];
+		? [
+				0, 8, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125, 135,
+				145, 155
+		  ]
+		: [
+				0, 4, 8, 15, 25, 35, 42, 57, 65, 75, 85, 95, 105, 115, 125, 135,
+				145, 155
+		  ];
+
+	return { speeds, delays };
+};
+
+const getTotalCycleDuration = (isSmallScreen: boolean, totalCards: number) => {
+	const { speeds, delays } = getSpeedsAndDelays(isSmallScreen);
+
+	let maxDuration = 0;
+	for (let i = 0; i < totalCards; i++) {
+		const duration = speeds[i % speeds.length];
+		const delay = delays[i % delays.length];
+		const cardTotalTime = delay + duration;
+		if (cardTotalTime > maxDuration) {
+			maxDuration = cardTotalTime;
+		}
+	}
+	return maxDuration;
+};
+
+const getTransition = (index: number, totalCycleDuration: number) => {
+	const isSmallScreen = window.innerWidth < 768;
+	const { speeds, delays } = getSpeedsAndDelays(isSmallScreen);
+
+	const duration = speeds[index % speeds.length];
+	const delay = delays[index % delays.length];
 
 	return {
-		duration: speeds[index % speeds.length],
-		delay: delays[index % delays.length],
+		duration: duration,
+		delay: delay,
 		ease: 'linear',
-		repeat: Infinity
+		repeat: Infinity,
+		repeatDelay: totalCycleDuration - duration
 	};
 };
 
@@ -95,6 +133,14 @@ const Projects = (props: Props) => {
 	const { data, animation, isHovered, setIsHovered } = props;
 
 	const hasData = data && data.length > 0;
+
+	const viewport = useViewportWidth();
+	const isSmallScreen = viewport === 'mobile';
+
+	const totalCycleDuration = getTotalCycleDuration(
+		isSmallScreen,
+		data.length
+	);
 
 	const slideVariants: Variants = {
 		animate: (i: number) => {
@@ -105,7 +151,7 @@ const Projects = (props: Props) => {
 			return {
 				x: [from.x, intermediate.x, to.x],
 				y: [from.y, intermediate.y, to.y],
-				transition: getTransition(i)
+				transition: getTransition(i, totalCycleDuration)
 			};
 		}
 	};
