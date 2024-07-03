@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 type Props = {
 	data: ProjectType;
-	slideCount: number;
 	isHovered: boolean;
 	setIsHovered: (isHovered: boolean) => void;
 };
@@ -17,7 +16,7 @@ const ProjectCardWrapper = styled.div<{
 	$isSmall: boolean;
 }>`
 	position: relative;
-	overflow: hidden;
+	/* overflow: hidden; */
 	width: ${(props) => (props.$isSmall ? '25vw' : '35vw')};
 	z-index: 1;
 	transform: ${(props) => props.$isHovered && 'scale(0.98)'};
@@ -48,16 +47,16 @@ const ProjectCardWrapper = styled.div<{
 	.image-component-wrapper,
 	.video-component-wrapper {
 		padding-top: ${(props) => props.$paddingTopRatio};
-		width: ${(props) => (props.$isSmall ? '30vw' : '60vw')};
+		width: 100%;
 
 		@media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-			width: ${(props) => (props.$isSmall ? '70vw' : '80vw')};
+			width: 100%;
 		}
 	}
 `;
 
 const ProjectCard = (props: Props) => {
-	const { data, slideCount, isHovered, setIsHovered } = props;
+	const { data, isHovered, setIsHovered } = props;
 
 	const [cardHovered, setCardHovered] = useState(false);
 

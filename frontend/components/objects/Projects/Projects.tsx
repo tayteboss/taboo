@@ -77,7 +77,7 @@ const getTransition = (index: number) => {
 	const isSmallScreen = window.innerWidth < 768;
 	const speeds = isSmallScreen
 		? [15, 18, 20, 25, 22, 19, 17, 21, 23, 16]
-		: [40, 36, 40, 42, 40, 40, 34, 42, 46, 38];
+		: [40, 39, 40, 42, 40, 40, 38, 42, 44, 38];
 
 	const delays = isSmallScreen
 		? [0, 8, 15, 25, 35, 45, 55, 65, 75, 85]
@@ -129,7 +129,6 @@ const Projects = (props: Props) => {
 							>
 								<ProjectCard
 									data={project}
-									slideCount={i + 1}
 									setIsHovered={setIsHovered}
 									isHovered={isHovered}
 								/>
