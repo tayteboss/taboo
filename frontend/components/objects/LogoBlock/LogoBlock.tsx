@@ -140,13 +140,14 @@ const LogoBlock = (props: Props) => {
 							fill="none"
 							xmlns="http://www.w3.org/2000/svg"
 						>
-							<g clip-path="url(#clip0_2752_234)">
+							<g clip-path="url(#clip0_1549_353)">
 								<motion.path
 									d="M1508.71 142.09C1475.85 49.89 1342.69 17.67 1267.09 87.02C1205.76 139.5 1216.73 235.9 1277.35 284.05C1315.44 315.99 1370.48 326.7 1418.67 310.71C1487.48 289.5 1535.6 213.35 1508.94 142.73L1508.7 142.08L1508.71 142.09Z"
 									stroke="var(--colour-white)"
 									strokeWidth="65"
-									strokeMiterlimit="10"
+									strokeMiterlimit="0.1"
 									strokeLinecap="round"
+									strokeLinejoin="miter"
 									initial={{ pathLength: 1 }}
 									animate={{ pathLength: 1 }}
 									transition={{
